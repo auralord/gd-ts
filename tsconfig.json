@@ -1,0 +1,11 @@
+{
+	"compileOnSave": true,
+	"compilerOptions": {
+		"target":"ES5",
+		"module": "commonjs",
+		"sourceMap": false,
+		"watch": true,
+		"removeComments": true,
+		"outFile": "js/game.js"
+	}
+}
