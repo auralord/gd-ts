@@ -490,7 +490,7 @@ function renderFreeCards() {
 
 	let t2: Phaser.Text = game.add.text(50, 150, "2", fontLight, tradeCenter);
 	let t3: Phaser.Text = game.add.text(50, 250, "3", fontLight, tradeCenter);
-	let t4: Phaser.Text = game.add.text(-5, 195, "Free Card", { font: "14px serif", fill: "white" }, tradeCenter);
+	let t4: Phaser.Text = game.add.text(-5, 195, "Trade Card", { font: "14px serif", fill: "white" }, tradeCenter);
 	t4.angle = -90;
 
 	swapInfo = game.add.text(250, 400, "Select card to swap", { font: "14px serif", fill: "white" });

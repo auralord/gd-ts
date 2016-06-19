@@ -733,7 +733,7 @@ function renderFreeCards() {
     }, tradeCenter);
     var t2 = game.add.text(50, 150, "2", fontLight, tradeCenter);
     var t3 = game.add.text(50, 250, "3", fontLight, tradeCenter);
-    var t4 = game.add.text(-5, 195, "Free Card", { font: "14px serif", fill: "white" }, tradeCenter);
+    var t4 = game.add.text(-5, 195, "Trade Card", { font: "14px serif", fill: "white" }, tradeCenter);
     t4.angle = -90;
     swapInfo = game.add.text(250, 400, "Select card to swap", { font: "14px serif", fill: "white" });
     swapInfo.anchor.x = 0.5;
