@@ -336,7 +336,7 @@ class Trading {
     }
 
     swap(player: Player, hIndex: number, fIndex: number) {
-        if (hIndex > 4 || hIndex < 0) {
+        if (hIndex > player.maxHand - 1 || hIndex < 0) {
             throw new Error("Tidak bisa menukar kartu tangan dengan index: " + hIndex)
         }
         if (fIndex > 2 || fIndex < 0) {

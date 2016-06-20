@@ -89,6 +89,7 @@ function createMonster(monster: Monster, x: number, y: number, callback: any, co
 	let ap: number = 0;
 	let hp: number = 0;
 	let bp: number = 0;
+	let t: number = monster.type;
 
 	if (side === ALLY) {
 		let index: number = players[active].field.monsters.indexOf(monster);
@@ -103,12 +104,12 @@ function createMonster(monster: Monster, x: number, y: number, callback: any, co
 		hp = monster.health;
 	}
 
-	let render: Phaser.Button = game.add.button(x, y, "monster", callback, context);
+	let render: Phaser.Button = game.add.button(x, y, "monster", callback, context, t, t, t, t);
 
-	let atk: Phaser.Text = game.add.text(25, 120, ap.toString(), fontLight);
+	let atk: Phaser.Text = game.add.text(22, 118, ap.toString(), fontDefault);
 	atk.anchor.set(0.5, 0.5);
 
-	let hlt: Phaser.Text = game.add.text(75, 120, hp.toString(), fontLight);
+	let hlt: Phaser.Text = game.add.text(81, 118, hp.toString(), fontDefault);
 	hlt.anchor.set(0.5, 0.5);
 
 	render.addChild(atk);
@@ -118,9 +119,14 @@ function createMonster(monster: Monster, x: number, y: number, callback: any, co
 		let type: string[] = ["ATK", "HP", "ALL"];
 		let i: number = monster.buffType;
 		let power: number = monster.buffValue;
-		let text: string = `${type[i]} \n+${power}`;
-		let buf: Phaser.Text = game.add.text(render.width / 2, 40, text, { font: "24px Arial", fill: "#2c95c2" });
+		let text: string = `${type[i]} +${power}`;
+		let buf: Phaser.Text = game.add.text(50, 5, text, {font: "12px serif", fill: "white"});
 		buf.anchor.set(0.5, 0.5);
+
+		let bufBG: Phaser.Sprite = game.add.sprite(50, 0, 'buff');
+		bufBG.anchor.set(0.5, 0.5);
+
+		render.addChild(bufBG);
 		render.addChild(buf);
 	}
 	return render;
@@ -218,10 +224,13 @@ function selectHandCard(button: Phaser.Button) {
 		if (monster.legit) {
 			let x: number = 10 + players[active].field.monsters.length * 110;
 			let y: number = 270;
-			let render: Phaser.Button = createMonster(monster, x, y, summonPreviewedMonster, this, PREVIEW);
-			let info: Phaser.Text = game.add.text(render.x + 5, render.y - 20, "click to summon", { font: "14px Arial", fill: "white" })
-			summonPreview.addChild(info);
+			let render: Phaser.Button = createMonster(monster, 0, 0, summonPreviewedMonster, this, PREVIEW);
+			let info: Phaser.Text = game.add.text(50, -15, "click to summon", { font: "18px serif", fill: "white", align: "center" })
+			info.anchor.set(0.5, 0.5);
 			summonPreview.addChild(render);
+			summonPreview.addChild(info);
+			summonPreview.x = x;
+			summonPreview.y = y;
 		} else {
 			summonPreview.removeAll();
 		}
@@ -511,7 +520,7 @@ function preload() {
 	game.load.spritesheet('button', "assets/button.png", 190, 49);
 	game.load.spritesheet('heart', "assets/heart copy.png", 40, 34)
 	game.load.image('nopeek', "assets/nopeek.JPG");
-	game.load.image('monster', "assets/monster.png");
+	game.load.spritesheet('monster', "assets/monster.PNG", 100, 135);
 	game.load.image('card', "assets/card.png");
 	game.load.image('c_red', "assets/red.png");
 	game.load.image('c_green', "assets/green.png");
@@ -520,6 +529,7 @@ function preload() {
 	game.load.image('bg', 'assets/bg.JPG');
 	game.load.image('p1', "assets/p1v.jpg");
 	game.load.image('p2', "assets/p2v.jpg");
+	game.load.image('buff', "assets/buff.png")
 }
 
 function create() {

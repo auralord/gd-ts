@@ -288,7 +288,7 @@ var Trading = (function () {
         this.queue.push(this.deck.draw());
     };
     Trading.prototype.swap = function (player, hIndex, fIndex) {
-        if (hIndex > 4 || hIndex < 0) {
+        if (hIndex > player.maxHand - 1 || hIndex < 0) {
             throw new Error("Tidak bisa menukar kartu tangan dengan index: " + hIndex);
         }
         if (fIndex > 2 || fIndex < 0) {
@@ -381,6 +381,7 @@ function createMonster(monster, x, y, callback, context, side) {
     var ap = 0;
     var hp = 0;
     var bp = 0;
+    var t = monster.type;
     if (side === ALLY) {
         var index = players[active].field.monsters.indexOf(monster);
         ap = players[active].field.getAttackValue(index);
@@ -395,10 +396,10 @@ function createMonster(monster, x, y, callback, context, side) {
         ap = monster.attack;
         hp = monster.health;
     }
-    var render = game.add.button(x, y, "monster", callback, context);
-    var atk = game.add.text(25, 120, ap.toString(), fontLight);
+    var render = game.add.button(x, y, "monster", callback, context, t, t, t, t);
+    var atk = game.add.text(22, 118, ap.toString(), fontDefault);
     atk.anchor.set(0.5, 0.5);
-    var hlt = game.add.text(75, 120, hp.toString(), fontLight);
+    var hlt = game.add.text(81, 118, hp.toString(), fontDefault);
     hlt.anchor.set(0.5, 0.5);
     render.addChild(atk);
     render.addChild(hlt);
@@ -406,9 +407,12 @@ function createMonster(monster, x, y, callback, context, side) {
         var type = ["ATK", "HP", "ALL"];
         var i = monster.buffType;
         var power = monster.buffValue;
-        var text = type[i] + " \n+" + power;
-        var buf = game.add.text(render.width / 2, 40, text, { font: "24px Arial", fill: "#2c95c2" });
+        var text = type[i] + " +" + power;
+        var buf = game.add.text(50, 5, text, { font: "12px serif", fill: "white" });
         buf.anchor.set(0.5, 0.5);
+        var bufBG = game.add.sprite(50, 0, 'buff');
+        bufBG.anchor.set(0.5, 0.5);
+        render.addChild(bufBG);
         render.addChild(buf);
     }
     return render;
@@ -494,10 +498,13 @@ function selectHandCard(button) {
         if (monster.legit) {
             var x = 10 + players[active].field.monsters.length * 110;
             var y = 270;
-            var render = createMonster(monster, x, y, summonPreviewedMonster, this, PREVIEW);
-            var info = game.add.text(render.x + 5, render.y - 20, "click to summon", { font: "14px Arial", fill: "white" });
-            summonPreview.addChild(info);
+            var render = createMonster(monster, 0, 0, summonPreviewedMonster, this, PREVIEW);
+            var info = game.add.text(50, -15, "click to summon", { font: "18px serif", fill: "white", align: "center" });
+            info.anchor.set(0.5, 0.5);
             summonPreview.addChild(render);
+            summonPreview.addChild(info);
+            summonPreview.x = x;
+            summonPreview.y = y;
         }
         else {
             summonPreview.removeAll();
@@ -748,7 +755,7 @@ function preload() {
     game.load.spritesheet('button', "assets/button.png", 190, 49);
     game.load.spritesheet('heart', "assets/heart copy.png", 40, 34);
     game.load.image('nopeek', "assets/nopeek.JPG");
-    game.load.image('monster', "assets/monster.png");
+    game.load.spritesheet('monster', "assets/monster.PNG", 100, 135);
     game.load.image('card', "assets/card.png");
     game.load.image('c_red', "assets/red.png");
     game.load.image('c_green', "assets/green.png");
@@ -757,6 +764,7 @@ function preload() {
     game.load.image('bg', 'assets/bg.JPG');
     game.load.image('p1', "assets/p1v.jpg");
     game.load.image('p2', "assets/p2v.jpg");
+    game.load.image('buff', "assets/buff.png");
 }
 function create() {
     bg = game.add.sprite(0, 0, 'bg');
