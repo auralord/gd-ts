@@ -754,8 +754,8 @@ function updateFreeCards() {
 function preload() {
     game.load.spritesheet('button', "assets/button.png", 190, 49);
     game.load.spritesheet('heart', "assets/heart copy.png", 40, 34);
-    game.load.image('nopeek', "assets/nopeek.JPG");
-    game.load.spritesheet('monster', "assets/monster.PNG", 100, 135);
+    game.load.image('nopeek', "assets/nopeek.jpg");
+    game.load.spritesheet('monster', "assets/monster.png", 100, 135);
     game.load.image('card', "assets/card.png");
     game.load.image('c_red', "assets/red.png");
     game.load.image('c_green', "assets/green.png");
